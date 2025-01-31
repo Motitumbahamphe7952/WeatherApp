@@ -31,7 +31,6 @@ const App = () => {
   console.log(`${apikey}`)
 
   const fetchAirQualityData = (lat, lon) => {
-    // const API_KEY = `${apikey}`;
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apikey}`
@@ -44,7 +43,6 @@ const App = () => {
       );
   };
   const fetchWeatherData = (city) => {
-    // const API_KEY = `${apikey}`;
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apikey}`
@@ -78,7 +76,6 @@ const App = () => {
   };
 
   const fetchWeatherDataByCoordinates = (lat, lon) => {
-    // const API_KEY = `${apikey}`;
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apikey}`
