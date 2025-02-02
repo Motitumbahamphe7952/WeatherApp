@@ -9,6 +9,38 @@ const FiveDayForecast = ({ forecastData }) => {
     }).format(date);
   };
 
+  console.log(forecastData);
+
+  const today = new Date();
+  const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+  const fiveDaysFromNow = new Date(
+    tomorrow.getTime() + 4 * 24 * 60 * 60 * 1000
+  );
+
+  // Create a map to store only one forecast per unique day
+  const uniqueForecast = new Map();
+
+  forecastData.list.forEach((forecast) => {
+    const date = new Date(forecast.dt * 1000);
+
+    // Format date to "YYYY-MM-DD" to compare days
+    const dateKey = date.toISOString().split("T")[0];
+
+    if (date >= tomorrow && date <= fiveDaysFromNow) {
+      // Store the first occurrence of each day
+      if (!uniqueForecast.has(dateKey)) {
+        uniqueForecast.set(dateKey, {
+          date: date.toLocaleDateString(),
+          temperature: forecast.main.temp,
+          weatherDescription: forecast.weather[0].description,
+        });
+      }
+    }
+  });
+
+  // Convert Map values to an array
+  const weatherForecast = Array.from(uniqueForecast.values());
+
   return (
     <div
       style={{
@@ -22,7 +54,7 @@ const FiveDayForecast = ({ forecastData }) => {
         paddingBottom: "5px",
       }}
     >
-      {forecastData.list.slice(0, 5).map((item, index) => (
+      {weatherForecast.map((item, index) => (
         <div
           key={index}
           style={{
@@ -34,18 +66,16 @@ const FiveDayForecast = ({ forecastData }) => {
         >
           <div>
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {Math.round(item.main.temp)}°c
+              {Math.round(item.temperature)}°c
             </div>
           </div>
           <div>
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {formatDate(item.dt_txt)}
+              {formatDate(item.date)}
             </div>
           </div>
           <div>
-            <div style={{ fontSize: "15px" }}>
-              {item.weather[0].description}
-            </div>
+            <div style={{ fontSize: "15px" }}>{item.weatherDescription}</div>
           </div>
         </div>
       ))}
