@@ -28,7 +28,7 @@ const App = () => {
   //       console.log(JSON.stringify(data));
   //     });
   // };
-  console.log(`${apikey}`)
+  // console.log(`${apikey}`)
 
   const fetchAirQualityData = (lat, lon) => {
     axios
@@ -49,7 +49,7 @@ const App = () => {
       )
       .then((response) => {
         setWeatherData(response.data);
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         fetchAirQualityData(response.data.coord.lat, response.data.coord.lon);
         axios
           .get(
@@ -82,7 +82,7 @@ const App = () => {
       )
       .then((response) => {
         setWeatherData(response.data);
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         fetchAirQualityData(lat, lon);
         axios
           .get(
